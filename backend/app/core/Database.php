@@ -1,6 +1,6 @@
 <?php
-    require_once '../backend/helpers/LoadEnv.php';
-    loadEnv('../.env');
+    require_once '../../backend/helpers/LoadEnv.php';
+    loadEnv('../../.env');
     
     class Database {
 
@@ -15,7 +15,6 @@
             try {
                 self::$connection = new PDO("mysql:host=$host;dbname=$name;charset=utf8", $username, $password);
                 self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo "Conectado!";
                 return self::$connection;
 
             } catch(PDOException $e){
