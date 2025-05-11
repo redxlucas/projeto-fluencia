@@ -27,5 +27,21 @@
 
             return $result ? new Phrase($result) : null;
         }
+
+        public static function checkAnswer($id, $answer) {
+            $db = Database::connect();
+            $stmt = $db->prepare("SELECT * FROM phrases WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+            $phrase = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$phrase) {
+                throw new Exception('Frase não encontrada.');
+            }
+
+            $correctTranslation = trim($phrase['translation']);
+            $userAnswer = trim($answer);
+
+            return strcasecmp($correctTranslation, $userAnswer) === 0;
+        }
     }
 ?>
