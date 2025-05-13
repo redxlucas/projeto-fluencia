@@ -1,6 +1,6 @@
 <?php
     require_once '../../backend/helpers/LoadEnv.php';
-    loadEnv('../../.env');
+    loadEnv('../.env');
     
     class Database {
 
