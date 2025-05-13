@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import PhrasePractice from './pages/PhrasePractice'
-import { Header } from './components/Header'
+import { Header } from './components/organism/Header'
 
 function App() {
   const [count, setCount] = useState(0)

@@ -1,15 +1,13 @@
-import React from 'react'
-import { Binary } from 'lucide-react'
 import { Tooltip } from 'radix-ui'
 
-export const BytesDisplay = ({ points = 0 }) => {
+export const CustomTooltip = ({ icon, text, tooltip, className = '' }) => {
     return (
-        <Tooltip.Provider delayDuration={200}>
+        <Tooltip.Provider delayDuration={100}>
             <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                    <span className="flex items-center gap-1 whitespace-nowrap">
-                        <Binary size={18} className="text-purple-700" />
-                        {points}
+                    <span className={`flex items-center gap-1 whitespace-nowrap cursor-default ${className}`}>
+                        {icon}
+                        {text}
                     </span>
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
@@ -18,7 +16,7 @@ export const BytesDisplay = ({ points = 0 }) => {
                         side="top"
                         sideOffset={4}
                     >
-                        Bytes Acumulados
+                        {tooltip}
                         <Tooltip.Arrow className="fill-black" />
                     </Tooltip.Content>
                 </Tooltip.Portal>
@@ -26,3 +24,4 @@ export const BytesDisplay = ({ points = 0 }) => {
         </Tooltip.Provider>
     )
 }
+

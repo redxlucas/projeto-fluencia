@@ -1,20 +1,25 @@
-// tailwind.config.js
+const { createThemes } = require('tw-colors')
+
 module.exports = {
-  content: [
-    './src/**/*.{js,jsx,ts,tsx}', // ajuste conforme necessário
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          DEFAULT: '#7e22ce',
-          dark: '#6b21a8',
-          light: '#a855f7',
+    content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+    theme: {
+        extends: {
+            colors: {
+                primary: 'steelblue',
+                secondary: 'darkblue',
+                brand: '#F3F3F3',
+                // ...other colors
+            },
         },
-        // Você pode continuar com outras categorias como 'secondary', 'background', etc.
-      },
     },
-  },
-  darkMode: 'class', // ou 'media' se quiser automático
-  plugins: [],
+    plugins: [
+        createThemes({
+            light: {
+                primary: 'steelblue',
+                secondary: 'darkblue',
+                brand: '#F3F3F3',
+                // ...other colors
+            },
+        }),
+    ],
 }
