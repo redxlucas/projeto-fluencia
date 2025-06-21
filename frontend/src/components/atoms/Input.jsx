@@ -14,7 +14,7 @@ export const Input = ({
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className={`w-full p-2 text-lg border border-gray-300 rounded-full ${className}`}
+            className={`w-full px-4 py-2 text-sm border border-gray-300 rounded-full ${className}`}
             {...props}
         />
     )

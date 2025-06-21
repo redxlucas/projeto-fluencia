@@ -1,15 +1,34 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PhrasePractice from './pages/PhrasePractice'
-import { Header } from './components/organism/Header'
+import PrivateRoute from './components/atoms/PrivateRoute'
+import HomePage from './pages/HomePage'
+import AppLayout from './components/layout/AppLayout'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div>
-      <PhrasePractice />
-    </div>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <AppLayout>
+                            <HomePage />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path="/phrasePractice/:sessionId"
+                    element={
+                        <PrivateRoute>
+                            <AppLayout>
+                                <PhrasePractice />
+                            </AppLayout>
+                        </PrivateRoute>
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default App

@@ -1,4 +1,3 @@
-
 export function Button({ children, className = '', ...props }) {
     return (
         <button
@@ -6,7 +5,6 @@ export function Button({ children, className = '', ...props }) {
             {...props}
         >
             {children}
-            
         </button>
     )
 }
