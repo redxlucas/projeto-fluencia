@@ -11,9 +11,11 @@ declare -A DIRS=(
   ["backend/public"]="public_html"
 )
 
-
-lftp -u "$USER","$PASS" $HOST <<EOF
+lftp -u "$USER","$PASS" "$HOST" <<EOF
 set ssl:verify-certificate no
-mirror -R --verbose "$LCD" "$RCD"
+$(for LOCAL in "${!DIRS[@]}"; do
+  REMOTE="${DIRS[$LOCAL]}"
+  echo "mirror -R --verbose \"$LOCAL\" \"$REMOTE\""
+done)
 quit
 EOF
