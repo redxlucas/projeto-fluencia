@@ -30,7 +30,7 @@ jobs:
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER }}
           password: ${{ secrets.PASS }}
-          localDir: frontend/build
+          localDir: frontend/dist
 
   deploy-backend:
     name: Deploy Backend PHP
