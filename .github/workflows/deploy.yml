@@ -45,14 +45,14 @@ jobs:
 
       - name: Criar arquivo .env dentro de backend/app
         run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" > backend/app/.env
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/app/.env
-          echo "DB_USER=${{ secrets.DB_USER }}" >> backend/app/.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/app/.env
-          echo "API_KEY=${{ secrets.API_KEY }}" >> backend/app/.env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> backend/app/.env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" > backend/app/_env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/app/_env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> backend/app/_env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/app/_env
+          echo "API_KEY=${{ secrets.API_KEY }}" >> backend/app/_env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> backend/app/_env
 
-      - name: Upload backend/app (com .env) via FTP
+      - name: Upload backend/app (com _env) via FTP
         uses: locaweb/ftp-deploy@1.0.0
         with:
           host: ${{ secrets.HOST }}
