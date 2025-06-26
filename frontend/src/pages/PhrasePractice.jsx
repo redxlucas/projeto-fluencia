@@ -5,6 +5,7 @@ import { speakText } from '../utils/speechSynthesis'
 import { Button } from '../components/atoms/Button'
 import { ProgressBar } from '../components/atoms/ProgressBar'
 import { AnswerForm } from '../components/molecules/AnswerForm'
+import { sendFeedback } from '../services/feedback'
 import { Speech, Snail } from 'lucide-react'
 import {
     checkSessionValidity,
@@ -113,14 +114,15 @@ const PhrasePractice = () => {
         if (!feedback.trim()) return
 
         try {
-            alert('Feedback enviado:\n' + feedback)
+            const result = await sendFeedback(feedback)
+            alert(result.message || 'Feedback enviado com sucesso.')
 
             if (sessionId) {
                 await endPracticeSession(sessionId)
                 console.log('Sessão finalizada com sucesso')
             }
         } catch (error) {
-            console.error('Erro ao finalizar sessão:', error.message)
+            console.error('Erro ao enviar feedback:', error.message)
         } finally {
             setFeedback('')
             setShowEndDialog(false)
