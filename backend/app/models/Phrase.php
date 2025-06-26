@@ -66,7 +66,7 @@ class Phrase
         $correctTranslation = trim($phrase['translation']);
         $userAnswer = trim($answer);
 
-        $prompt = "Compare a frase do usuário com a frase correta, ignorando diferenças de acentuação, maiúsculas, minúsculas, espaços extras e pontuações. Usuário: \"$userAnswer\". Correto: \"$correctTranslation\". Responda estritamente com uma única palavra: 'correta' se as frases são equivalentes, ou 'incorreta' caso contrário.";
+        $prompt = "Compare a frase do usuário com a frase correta, ignorando diferenças de acentuação, maiúsculas, minúsculas, pequenos erros de ortografia, espaços extras e pontuações. Usuário: \"$userAnswer\". Correto: \"$correctTranslation\". Responda estritamente com uma única palavra: 'correta' se as frases são equivalentes, ou 'incorreta' caso contrário.";
 
         $apiResponse = requestApi($prompt);
 
