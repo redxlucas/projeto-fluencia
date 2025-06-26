@@ -41,6 +41,16 @@ class Phrase
     //     return $result ? new Phrase($result) : null;
     // }
 
+    public static function getOne($id)
+    {
+        $db = Database::connect();
+        $stmt = $db->prepare("SELECT * FROM phrases WHERE id = :id LIMIT 1");
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? new Phrase($result) : null;
+    }
+
     public static function checkAnswer($id, $answer)
     {
         $db = Database::connect();

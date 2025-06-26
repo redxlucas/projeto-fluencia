@@ -32,14 +32,7 @@ class PracticeSessionController
 
     public function attempt()
     {
-        $jwtPayload = JWTMiddleware::authenticate();
-        $userId = $jwtPayload['sub'] ?? null;
-
-        if ($userId === null) {
-            http_response_code(401);
-            echo json_encode(['error' => 'Usuário não autenticado']);
-            return;
-        }
+        $userId = AuthMiddleware::requireAuth();
 
         $input = json_decode(file_get_contents('php://input'), true);
 
@@ -47,11 +40,11 @@ class PracticeSessionController
         $phraseId = $input['phrase_id'] ?? null;
         $practiceSessionId = $input['practice_session_id'] ?? null;
 
-        if (!$phraseId || !$practiceSessionId) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Dados incompletos']);
-            return;
-        }
+        // if (empty($phraseId) || empty($practiceSessionId)) {
+        //     http_response_code(400);
+        //     echo json_encode(['error' => 'Dados incompletos']);
+        //     return;
+        // }
 
         try {
             $isCorrect = Phrase::checkAnswer($phraseId, $userInput);
@@ -68,7 +61,14 @@ class PracticeSessionController
             'phraseId' => $phraseId,
             'practiceSessionId' => $practiceSessionId
         ]);
-        $practice->save();
+
+        $success = $practice->save();
+
+        if (!$success) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Erro ao salvar tentativa']);
+            return;
+        }
 
         $session = new PracticeSession();
         $session->updateStats($practiceSessionId, $isCorrect);
@@ -108,5 +108,35 @@ class PracticeSessionController
         $session->end($sessionId);
 
         echo json_encode(['ended' => true]);
+    }
+
+    public function getAll()
+    {
+        $userId = AuthMiddleware::requireAuth();
+
+        $session = new PracticeSession();
+        $sessions = $session->getAllByUser($userId);
+
+        echo json_encode($sessions);
+    }
+
+    public function getPractices(int $sessionId)
+    {
+        $userId = AuthMiddleware::requireAuth();
+
+        $session = new PracticeSession();
+
+        $existingSession = $session->findSessionByIdAndUser($sessionId, $userId);
+
+        if (!$existingSession) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Sessão não encontrada ou você não tem permissão']);
+            return;
+        }
+
+        $practice = new Practice();
+        $practicesList = $practice->getAllByPracticeSessionId($sessionId);
+
+        echo json_encode($practicesList);
     }
 }

@@ -36,14 +36,14 @@ export function StartSessionModal({ onSessionStarted }) {
     return (
         <Dialog.Root>
             <Dialog.Trigger asChild>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded">
+                <button className="px-4 py-2 bg-purple-600 text-white rounded-full">
                     Iniciar Sessão
                 </button>
             </Dialog.Trigger>
 
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 bg-black/40" />
-                <Dialog.Content className="fixed top-1/2 left-1/2 w-[90vw] max-w-md -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-xl">
+                <Dialog.Content className="fixed top-1/2 left-1/2 w-[90vw] max-w-md -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-xl">
                     <Dialog.Title className="text-xl font-bold mb-4">
                         Escolha as categorias
                     </Dialog.Title>
@@ -55,9 +55,9 @@ export function StartSessionModal({ onSessionStarted }) {
                             <button
                                 key={cat.id}
                                 onClick={() => toggleCategory(cat.id)}
-                                className={`px-3 py-1 border rounded ${
+                                className={`px-3 py-1 border rounded-full ${
                                     selected.includes(cat.id)
-                                        ? 'bg-blue-600 text-white'
+                                        ? 'bg-purple-600 text-white'
                                         : 'bg-white'
                                 }`}
                             >
@@ -68,14 +68,14 @@ export function StartSessionModal({ onSessionStarted }) {
 
                     <div className="flex justify-end gap-2">
                         <Dialog.Close asChild>
-                            <button className="px-4 py-2 bg-gray-300 rounded">
+                            <button className="px-4 py-2 bg-gray-300 rounded-full">
                                 Cancelar
                             </button>
                         </Dialog.Close>
                         <button
                             onClick={handleStart}
                             disabled={loading || selected.length === 0}
-                            className="px-4 py-2 bg-green-600 text-white rounded disabled:opacity-50"
+                            className="px-4 py-2 bg-purple-600 text-white rounded-full disabled:bg-purple-500"
                         >
                             {loading ? 'Iniciando...' : 'Começar'}
                         </button>
