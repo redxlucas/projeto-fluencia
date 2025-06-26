@@ -27,6 +27,7 @@ const PhrasePractice = () => {
     const navigate = useNavigate()
     const [invalidSession, setInvalidSession] = useState(false)
     const [showEndDialog, setShowEndDialog] = useState(false)
+    const [feedback, setFeedback] = useState('')
 
     const { loading: loadingSession, error: sessionError } = useSession()
 
@@ -106,6 +107,12 @@ const PhrasePractice = () => {
             console.error('Erro ao tentar resposta:', error)
             setMessage('❌ Erro ao processar a resposta.')
         }
+    }
+
+    const handleSendFeedback = () => {
+        if (!feedback.trim()) return
+        alert('Feedback enviado:\n' + feedback)
+        setFeedback('')
     }
 
     const handleCloseDialog = async () => {

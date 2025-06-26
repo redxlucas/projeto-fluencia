@@ -72,6 +72,6 @@ class Phrase
 
         $apiResponse = trim((string) $apiResponse);
 
-        return stripos($apiResponse, 'correta') !== false;
+        return strtolower(trim($apiResponse)) === 'correta';
     }
 }
