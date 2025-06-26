@@ -119,7 +119,6 @@ const PhrasePractice = () => {
 
             if (sessionId) {
                 await endPracticeSession(sessionId)
-                console.log('Sessão finalizada com sucesso')
             }
         } catch (error) {
             console.error('Erro ao enviar feedback:', error.message)
@@ -134,7 +133,6 @@ const PhrasePractice = () => {
         try {
             if (sessionId) {
                 await endPracticeSession(sessionId)
-                console.log('Sessão finalizada com sucesso')
             }
         } catch (error) {
             console.error('Erro ao finalizar sessão:', error.message)

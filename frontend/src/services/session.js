@@ -5,7 +5,6 @@ export async function startPracticeSession(categoryIds) {
         const response = await api.post('/api/sessions/start', {
             category_ids: categoryIds,
         })
-        console.log('Resposta da API:', response.data)
         return response.data
     } catch (error) {
         if (
@@ -22,7 +21,6 @@ export async function startPracticeSession(categoryIds) {
 export async function endPracticeSession(sessionId) {
     try {
         const response = await api.post(`/api/sessions/${sessionId}/end`)
-        console.log('Sessão finalizada:', response.data)
         return response.data
     } catch (error) {
         if (
@@ -55,7 +53,6 @@ export async function checkSessionValidity(sessionId) {
 export async function getSessions() {
     try {
         const response = await api.get('/api/sessions')
-        console.log(response.data)
         return response.data
     } catch (error) {
         if (
