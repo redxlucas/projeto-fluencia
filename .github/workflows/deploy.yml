@@ -31,6 +31,7 @@ jobs:
           user: ${{ secrets.USER }}
           password: ${{ secrets.PASS }}
           localDir: frontend/dist
+          remoteDir: public_html
 
   deploy-backend:
     name: Deploy Backend PHP
@@ -39,6 +40,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Instalar dependências PHP (composer install)
+        run: composer install --no-dev --optimize-autoloader
+
       - name: Criar arquivo .env para backend
         run: |
           echo "DB_HOST=${{ secrets.DB_HOST }}" > backend/app/.env
@@ -46,7 +50,7 @@ jobs:
           echo "DB_USER=${{ secrets.DB_USER }}" >> backend/app/.env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/app/.env
 
-      - name: Upload backend PHP via FTP
+      - name: Upload backend (app/) via FTP
         uses: locaweb/ftp-deploy@1.0.0
         with:
           host: ${{ secrets.HOST }}
@@ -54,3 +58,21 @@ jobs:
           password: ${{ secrets.PASS }}
           localDir: backend/app
           remoteDir: app
+
+      - name: Upload vendor/ via FTP
+        uses: locaweb/ftp-deploy@1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          localDir: vendor
+          remoteDir: vendor
+
+      - name: Upload index.php via FTP
+        uses: locaweb/ftp-deploy@1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          localDir: backend/public
+          remoteDir: public_html
