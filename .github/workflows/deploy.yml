@@ -43,33 +43,22 @@ jobs:
       - name: Instalar dependências PHP (composer install)
         run: composer install --no-dev --optimize-autoloader
 
-      - name: Criar arquivo .env para backend
+      - name: Criar arquivo .env dentro de backend/app
         run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" > backend/.env
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/.env
-          echo "DB_USER=${{ secrets.DB_USER }}" >> backend/.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/.env
-          echo "API_KEY=${{ secrets.API_KEY }}" >> backend/.env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> backend/.env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" > backend/app/.env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/app/.env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> backend/app/.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/app/.env
+          echo "API_KEY=${{ secrets.API_KEY }}" >> backend/app/.env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> backend/app/.env
 
-      # - name: Upload .env via FTP
-      #   uses: locaweb/ftp-deploy@1.0.0
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     user: ${{ secrets.USER }}
-      #     password: ${{ secrets.PASS }}
-      #     localDir: backend/.env
-      #     remoteDir: app
-      # Se o locaweb/ftp-deploy aceitar, pode usar include: '.env'
-      # Caso contrário, ele enviará tudo de backend, que inclui .env e backend/app.
-
-      - name: Upload backend via FTP
+      - name: Upload backend/app (com .env) via FTP
         uses: locaweb/ftp-deploy@1.0.0
         with:
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER }}
           password: ${{ secrets.PASS }}
-          localDir: backend
+          localDir: backend/app
           remoteDir: app
 
       - name: Upload vendor/ via FTP
