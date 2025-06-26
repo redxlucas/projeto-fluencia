@@ -5,7 +5,7 @@ use Firebase\JWT\Key;
 
 require_once __DIR__ . '/../traits/Getter.php';
 require_once __DIR__ . '/../traits/Constructor.php';
-require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 class User
 {
