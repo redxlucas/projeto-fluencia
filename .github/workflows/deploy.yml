@@ -52,24 +52,24 @@ jobs:
           echo "API_KEY=${{ secrets.API_KEY }}" >> backend/.env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> backend/.env
 
-      - name: Upload .env via FTP
+      # - name: Upload .env via FTP
+      #   uses: locaweb/ftp-deploy@1.0.0
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     user: ${{ secrets.USER }}
+      #     password: ${{ secrets.PASS }}
+      #     localDir: backend/.env
+      #     remoteDir: app
+      # Se o locaweb/ftp-deploy aceitar, pode usar include: '.env'
+      # Caso contrário, ele enviará tudo de backend, que inclui .env e backend/app.
+
+      - name: Upload backend via FTP
         uses: locaweb/ftp-deploy@1.0.0
         with:
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER }}
           password: ${{ secrets.PASS }}
           localDir: backend
-          remoteDir: app
-          # Se o locaweb/ftp-deploy aceitar, pode usar include: '.env'
-          # Caso contrário, ele enviará tudo de backend, que inclui .env e backend/app.
-
-      - name: Upload backend (app/) via FTP
-        uses: locaweb/ftp-deploy@1.0.0
-        with:
-          host: ${{ secrets.HOST }}
-          user: ${{ secrets.USER }}
-          password: ${{ secrets.PASS }}
-          localDir: backend/app
           remoteDir: app
 
       - name: Upload vendor/ via FTP
