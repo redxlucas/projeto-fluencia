@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../app/middleware/JWTMiddleware.php';
+require_once __DIR__ . '/../middleware/JWTMiddleware.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $parsedUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

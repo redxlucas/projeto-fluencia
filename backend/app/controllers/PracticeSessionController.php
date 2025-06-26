@@ -1,6 +1,6 @@
 <?php
 
-require_once '../helpers/Autoload.php';
+require_once __DIR__ . '/../helpers/Autoload.php';
 require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 
 class PracticeSessionController

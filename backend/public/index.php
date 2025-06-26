@@ -9,4 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_once '../routes/api.php';
+file_put_contents('debug.log', $_SERVER['REQUEST_URI'] . PHP_EOL, FILE_APPEND);
+
+require_once '../app/routes/api.php';

@@ -1,5 +1,5 @@
 <?php
-require_once '../../backend/helpers/LoadEnv.php';
+require_once __DIR__ . '/../helpers/LoadEnv.php';
 loadEnv('../.env');
 
 class Database
