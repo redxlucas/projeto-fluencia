@@ -109,11 +109,23 @@ const PhrasePractice = () => {
         }
     }
 
-    const handleSendFeedback = () => {
+    const handleSendFeedback = async () => {
         if (!feedback.trim()) return
-        alert('Feedback enviado:\n' + feedback)
-        setFeedback('')
-        setShowEndDialog(false)
+
+        try {
+            alert('Feedback enviado:\n' + feedback)
+
+            if (sessionId) {
+                await endPracticeSession(sessionId)
+                console.log('Sessão finalizada com sucesso')
+            }
+        } catch (error) {
+            console.error('Erro ao finalizar sessão:', error.message)
+        } finally {
+            setFeedback('')
+            setShowEndDialog(false)
+            navigate('/')
+        }
     }
 
     const handleCloseDialog = async () => {
