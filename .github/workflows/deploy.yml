@@ -53,4 +53,4 @@ jobs:
           user: ${{ secrets.USER }}
           password: ${{ secrets.PASS }}
           localDir: backend/app
-          remoteDir: public_html/app
+          remoteDir: app
