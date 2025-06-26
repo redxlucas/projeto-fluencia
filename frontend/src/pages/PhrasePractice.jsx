@@ -113,6 +113,7 @@ const PhrasePractice = () => {
         if (!feedback.trim()) return
         alert('Feedback enviado:\n' + feedback)
         setFeedback('')
+        setShowEndDialog(false)
     }
 
     const handleCloseDialog = async () => {
