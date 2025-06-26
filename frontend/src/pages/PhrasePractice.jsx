@@ -182,21 +182,46 @@ const PhrasePractice = () => {
                     onClick={handleCloseDialog}
                 >
                     <div
-                        className="bg-white p-6 rounded shadow max-w-sm text-center"
+                        className="bg-white p-6 rounded shadow max-w-lg w-full mx-4 text-center"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-xl font-bold mb-4">
+                        <h2 className="text-2xl font-bold mb-4">
                             Sessão finalizada! 🎉
                         </h2>
                         <p>
                             Você acertou {correctCount} de {totalSteps} frases.
                         </p>
-                        <button
-                            className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700"
-                            onClick={handleCloseDialog}
+
+                        <label
+                            htmlFor="feedback"
+                            className="block text-left mt-6 mb-2 font-semibold"
                         >
-                            Voltar para a página inicial
-                        </button>
+                            Deixe seu feedback sobre a sessão:
+                        </label>
+                        <textarea
+                            id="feedback"
+                            rows={6}
+                            className="w-full p-3 border border-gray-300 rounded resize-none"
+                            placeholder="Escreva aqui seu feedback..."
+                            value={feedback}
+                            onChange={(e) => setFeedback(e.target.value)}
+                        />
+
+                        <div className="mt-4 flex justify-center gap-4">
+                            <button
+                                className="px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 disabled:opacity-50"
+                                onClick={handleSendFeedback}
+                                disabled={!feedback.trim()}
+                            >
+                                Enviar Feedback para E-mail
+                            </button>
+                            <button
+                                className="px-6 py-2 border border-gray-400 rounded-full hover:bg-gray-100"
+                                onClick={handleCloseDialog}
+                            >
+                                Voltar para a página inicial
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
