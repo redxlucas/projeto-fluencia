@@ -71,14 +71,14 @@ export default function HomePage() {
                             navigate(`/phrasePractice/${sessionId}`)
                         }
                     >
-                        <Button className="px-8 py-3 bg-primary text-white rounded-md text-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition inline-flex items-center gap-2">
+                        <Button className="px-8 py-3 bg-primary text-white rounded-full text-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition inline-flex items-center gap-2">
                             <Play size={20} /> Iniciar Sessão
                         </Button>
                     </StartSessionModal>
                 ) : (
                     <Dialog.Root open={open} onOpenChange={setOpen}>
                         <Dialog.Trigger asChild>
-                            <Button className="inline-flex items-center justify-center px-8 py-3 bg-primary text-white rounded-md text-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition">
+                            <Button className="inline-flex items-center justify-center px-8 py-3 bg-primary text-white rounded-full text-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition">
                                 Entrar
                             </Button>
                         </Dialog.Trigger>

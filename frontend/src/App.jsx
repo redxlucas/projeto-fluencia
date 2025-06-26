@@ -3,6 +3,7 @@ import PhrasePractice from './pages/PhrasePractice'
 import PrivateRoute from './components/atoms/PrivateRoute'
 import HomePage from './pages/HomePage'
 import AppLayout from './components/layout/AppLayout'
+import { HistoryPage } from './pages/HistoryPage'
 
 function App() {
     return (
@@ -22,6 +23,16 @@ function App() {
                         <PrivateRoute>
                             <AppLayout>
                                 <PhrasePractice />
+                            </AppLayout>
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/historic"
+                    element={
+                        <PrivateRoute>
+                            <AppLayout>
+                                <HistoryPage />
                             </AppLayout>
                         </PrivateRoute>
                     }

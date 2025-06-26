@@ -12,3 +12,9 @@ export default defineConfig({
         },
     },
 })
+
+export default {
+  optimizeDeps: {
+    include: ['@radix-ui/react-hover-card'],
+  },
+};

@@ -6,15 +6,18 @@ import { Button } from '../components/atoms/Button'
 import { ProgressBar } from '../components/atoms/ProgressBar'
 import { AnswerForm } from '../components/molecules/AnswerForm'
 import { Speech, Snail } from 'lucide-react'
-import { checkSessionValidity } from '../services/session'
+import {
+    checkSessionValidity,
+    endPracticeSession,
+    attemptPractice,
+} from '../services/session'
 import { useSession } from '../hooks/useSession'
 import { SessionInvalidAlert } from '../components/atoms/InvalidAlert'
 
 const totalSteps = 5
 
 const PhrasePractice = () => {
-    const [phrase, setPhrase] = useState('')
-    const [translation, setTranslation] = useState('')
+    const [phraseData, setPhraseData] = useState(null)
     const [userInput, setUserInput] = useState('')
     const [loadingPhrase, setLoadingPhrase] = useState(true)
     const [message, setMessage] = useState(' ')
@@ -23,6 +26,7 @@ const PhrasePractice = () => {
     const { sessionId } = useParams()
     const navigate = useNavigate()
     const [invalidSession, setInvalidSession] = useState(false)
+    const [showEndDialog, setShowEndDialog] = useState(false)
 
     const { loading: loadingSession, error: sessionError } = useSession()
 
@@ -50,8 +54,7 @@ const PhrasePractice = () => {
     const getPhrase = async () => {
         try {
             const phrase = await fetchRandomPhrase()
-            setPhrase(phrase.phrase)
-            setTranslation(phrase.translation)
+            setPhraseData(phrase)
             setLoadingPhrase(false)
         } catch (err) {
             setMessage('Erro ao carregar frase')
@@ -63,7 +66,7 @@ const PhrasePractice = () => {
         setUserInput(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         if (step >= totalSteps) return
@@ -73,33 +76,58 @@ const PhrasePractice = () => {
             return
         }
 
-        if (userInput.trim().toLowerCase() === translation.toLowerCase()) {
-            setMessage('✅ Resposta correta!')
-            setCorrectCount((prev) => prev + 1)
-        } else {
-            setMessage('❌ Resposta incorreta. Tente novamente.')
-        }
+        try {
+            const result = await attemptPractice(
+                userInput,
+                phraseData?.id,
+                parseInt(sessionId)
+            )
 
-        setUserInput('')
-
-        setTimeout(() => {
-            const nextStep = step + 1
-            setStep(nextStep)
-
-            if (nextStep < totalSteps) {
-                getPhrase()
+            if (result.correct) {
+                setMessage('✅ Resposta correta!')
+                setCorrectCount((prev) => prev + 1)
             } else {
-                setMessage(
-                    `Sessão de prática finalizada!🎉 ${correctCount}/${totalSteps} acertos!`
-                )
+                setMessage('❌ Resposta incorreta. Tente novamente.')
             }
-        }, 1)
+
+            setUserInput('')
+
+            setTimeout(() => {
+                const nextStep = step + 1
+                setStep(nextStep)
+
+                if (nextStep < totalSteps) {
+                    getPhrase()
+                } else {
+                    setShowEndDialog(true)
+                }
+            }, 500)
+        } catch (error) {
+            console.error('Erro ao tentar resposta:', error)
+            setMessage('❌ Erro ao processar a resposta.')
+        }
+    }
+
+    const handleCloseDialog = async () => {
+        try {
+            if (sessionId) {
+                await endPracticeSession(sessionId)
+                console.log('Sessão finalizada com sucesso')
+            }
+        } catch (error) {
+            console.error('Erro ao finalizar sessão:', error.message)
+        } finally {
+            setShowEndDialog(false)
+            navigate('/')
+        }
     }
 
     const handleSpeak = (customOptions = {}) => {
         const defaultOptions = { lang: 'en-US', rate: 1 }
         const options = { ...defaultOptions, ...customOptions }
-        speakText(phrase, options)
+        if (phraseData?.phrase) {
+            speakText(phraseData.phrase, options)
+        }
     }
 
     return (
@@ -121,7 +149,9 @@ const PhrasePractice = () => {
                         <p className="text-red-600">Erro: {sessionError}</p>
                     ) : invalidSession ? null : (
                         <>
-                            <p className="text-lg text-primary">{phrase}</p>
+                            <p className="text-lg text-primary">
+                                {phraseData?.phrase}
+                            </p>
                             <div className="flex gap-2">
                                 <Button onClick={() => handleSpeak()}>
                                     <Speech size={30} />
@@ -137,6 +167,7 @@ const PhrasePractice = () => {
                                 value={userInput}
                                 onChange={handleInputChange}
                                 onSubmit={handleSubmit}
+                                disabled={showEndDialog}
                             />
                         </>
                     )}
@@ -144,6 +175,31 @@ const PhrasePractice = () => {
                     {message && <p>{message}</p>}
                 </div>
             </div>
+
+            {showEndDialog && (
+                <div
+                    className="fixed inset-0 bg-black/50 flex justify-center items-center z-50"
+                    onClick={handleCloseDialog}
+                >
+                    <div
+                        className="bg-white p-6 rounded shadow max-w-sm text-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h2 className="text-xl font-bold mb-4">
+                            Sessão finalizada! 🎉
+                        </h2>
+                        <p>
+                            Você acertou {correctCount} de {totalSteps} frases.
+                        </p>
+                        <button
+                            className="mt-6 px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700"
+                            onClick={handleCloseDialog}
+                        >
+                            Voltar para a página inicial
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

@@ -23,3 +23,13 @@ if (preg_match('#^/api/sessions/(\d+)/end$#', $cleanedUri, $matches)) {
     (new PracticeSessionController())->end($matches[1]);
     exit;
 }
+
+if ($routeKey === 'GET /api/sessions') {
+    (new PracticeSessionController())->getAll();
+    exit;
+}
+
+if (preg_match('#^/api/sessions/(\d+)/practices$#', $cleanedUri, $matches)) {
+    (new PracticeSessionController())->getPractices($matches[1]);
+    exit;
+}

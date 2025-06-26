@@ -12,6 +12,7 @@ $publicRoutes = [
     'POST /auth/register',
     'GET /api/phrases/random',
     'GET /api/category/all',
+    'GET /api/phrases'
 ];
 
 if (!in_array($routeKey, $publicRoutes)) {

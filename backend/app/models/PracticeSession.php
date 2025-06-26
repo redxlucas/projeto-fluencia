@@ -70,4 +70,31 @@ class PracticeSession
         $stmt->execute(['sessionId' => $sessionId, 'userId' => $userId]);
         return $stmt->fetchObject();
     }
+
+    public function getAllByUser(int $userId): array
+    {
+        $db = Database::connect();
+        $sql = "SELECT * FROM practice_sessions WHERE user_id = :userId ORDER BY started_at DESC";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['userId' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function getOneByIdAndUser(int $sessionId, int $userId)
+    {
+        $db = Database::connect();
+        $sql = "SELECT * FROM practice_sessions WHERE id = :sessionId AND user_id = :userId LIMIT 1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['sessionId' => $sessionId, 'userId' => $userId]);
+        return $stmt->fetchObject();
+    }
+
+    public function findSessionByIdAndUser(int $sessionId, int $userId)
+    {
+        $db = Database::connect();
+        $sql = "SELECT * FROM practice_sessions WHERE id = :sessionId AND user_id = :userId";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['sessionId' => $sessionId, 'userId' => $userId]);
+        return $stmt->fetchObject();
+    }
 }

@@ -21,4 +21,24 @@ class PhraseController
             'difficult' => $randomPhrase->getDifficult()
         ]);
     }
+
+    public static function getPhrase(int $phraseId)
+    {
+        $userId = AuthMiddleware::requireAuth();
+
+        $phrase = Phrase::getOne($phraseId);
+
+        if (!$phrase) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Frase não encontrada']);
+            return;
+        }
+
+        echo json_encode([
+            'id' => $phrase->getId(),
+            'phrase' => $phrase->getPhrase(),
+            'translation' => $phrase->getTranslation(),
+            'difficult' => $phrase->getDifficult(),
+        ]);
+    }
 }
