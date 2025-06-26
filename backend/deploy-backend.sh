@@ -15,7 +15,7 @@ lftp -u "$USER","$PASS" "$HOST" <<EOF
 set ssl:verify-certificate no
 $(for LOCAL in "${!DIRS[@]}"; do
   REMOTE="${DIRS[$LOCAL]}"
-  echo "mirror -R --verbose \"$LOCAL\" \"$REMOTE\""
+  echo "mirror -R --verbose --overwrite --delete \"$LOCAL\" \"$REMOTE\""
 done)
 quit
 EOF
