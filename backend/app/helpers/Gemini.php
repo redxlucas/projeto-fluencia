@@ -1,5 +1,5 @@
 <?php
-require_once 'loadEnv.php';
+require_once '/loadEnv.php';
 
 loadEnv(__DIR__ . '/../.env');
 
