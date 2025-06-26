@@ -70,10 +70,8 @@ class Phrase
 
         $apiResponse = requestApi($prompt);
 
-        if (stripos($apiResponse, 'correta') !== false) {
-            return true;
-        }
+        $apiResponse = trim((string) $apiResponse);
 
-        return false;
+        return stripos($apiResponse, 'correta') !== false;
     }
 }
