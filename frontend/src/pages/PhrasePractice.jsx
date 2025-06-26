@@ -217,7 +217,7 @@ const PhrasePractice = () => {
 
                         <div className="mt-4 flex justify-center gap-4">
                             <button
-                                className="px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 disabled:opacity-50"
+                                className="px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-primary disabled:opacity-50"
                                 onClick={handleSendFeedback}
                                 disabled={!feedback.trim()}
                             >

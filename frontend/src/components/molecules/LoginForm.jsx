@@ -37,7 +37,7 @@ export function LoginForm({ onSuccess }) {
                 disabled={loading}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-600"
             />
             <input
                 type="password"
@@ -46,7 +46,7 @@ export function LoginForm({ onSuccess }) {
                 disabled={loading}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-600"
             />
             {message && (
                 <p
@@ -65,7 +65,7 @@ export function LoginForm({ onSuccess }) {
                 className={`py-2 rounded-md text-white transition ${
                     loading
                         ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-purple-600 hover:bg-purple-700'
+                        : 'bg-purple-600 hover:bg-primary'
                 }`}
             >
                 {loading ? 'Entrando...' : 'Entrar'}

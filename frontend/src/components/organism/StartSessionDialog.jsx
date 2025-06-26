@@ -36,7 +36,7 @@ export function StartSessionModal({ onSessionStarted }) {
     return (
         <Dialog.Root>
             <Dialog.Trigger asChild>
-                <button className="px-4 py-2 bg-purple-600 text-white rounded-full">
+                <button className="px-4 py-2 bg-primary text-white rounded-full">
                     Iniciar Sessão
                 </button>
             </Dialog.Trigger>
@@ -75,7 +75,7 @@ export function StartSessionModal({ onSessionStarted }) {
                         <button
                             onClick={handleStart}
                             disabled={loading || selected.length === 0}
-                            className="px-4 py-2 bg-purple-600 text-white rounded-full disabled:bg-purple-500"
+                            className="px-4 py-2 bg-primary text-white rounded-full disabled:bg-purple-600"
                         >
                             {loading ? 'Iniciando...' : 'Começar'}
                         </button>
