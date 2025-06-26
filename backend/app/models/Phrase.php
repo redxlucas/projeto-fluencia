@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../traits/Getter.php';
 require_once __DIR__ . '/../traits/Constructor.php';
+require_once __DIR__ . '/../helpers/Gemini.php';
 
 class Phrase
 {
@@ -65,6 +66,14 @@ class Phrase
         $correctTranslation = trim($phrase['translation']);
         $userAnswer = trim($answer);
 
-        return strcasecmp($correctTranslation, $userAnswer) === 0;
+        $prompt = "Compare a frase do usuário com a frase correta, ignorando diferenças de acentuação, maiúsculas, minúsculas, espaços extras e pontuações. Usuário: \"$userAnswer\". Correto: \"$correctTranslation\". Responda estritamente com uma única palavra: 'correta' se as frases são equivalentes, ou 'incorreta' caso contrário.";
+
+        $apiResponse = requestApi($prompt);
+
+        if (stripos($apiResponse, 'correta') !== false) {
+            return true;
+        }
+
+        return false;
     }
 }
