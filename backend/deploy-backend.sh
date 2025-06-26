@@ -4,8 +4,13 @@ set -o allexport
 source .env.deploy
 set +o allexport
 
-LCD="$PWD/backend/app"
-RCD="public_html/app"
+declare -A DIRS=(
+  ["backend/app"]="public_html/app"
+  ["backend/helpers"]="public_html/helpers"
+  ["backend/routes"]="public_html/routes"
+  ["backend/public"]="public_html"
+)
+
 
 lftp -u "$USER","$PASS" $HOST <<EOF
 set ssl:verify-certificate no
